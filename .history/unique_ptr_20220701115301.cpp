@@ -5,7 +5,6 @@ class unique_ptr
 {
 public:
     constexpr unique_ptr() noexcept = default;
-    constexpr unique_ptr(nullptr_t) noexcept : unique_ptr() {}
 
     // 不能隐身转换，拷贝构造声明为explicit
     explicit unique_ptr(T *ptr) noexcept : m_ptr(ptr);
@@ -19,11 +18,6 @@ public:
     }
 
     unique_ptr &operator=(const unique_ptr &) = delete;
-    unique_ptr &operator=(nullptr_t)
-    {
-        reset();
-        return *this;
-    }
 
     unique_ptr &operator=(unique_ptr &&rhs) noexcept
     {
@@ -72,16 +66,8 @@ private:
     T *m_ptr{nullptr};
 };
 
-template <typename T, typename... Args>
-auto make_unique(Args &&...args)
-{
-    return unique_ptr<T>{new T(std::forward(args)...)};
-    // return unique_ptr<T>{new T{std::forward(args)...}};
-}
-
 void func(unique_ptr<int>) {}
 
-#include <vector>
 int main()
 {
     // 不能隐身转换，bool声明为explicit
@@ -89,9 +75,4 @@ int main()
 
     // 不能隐身转换，拷贝构造声明为explicit
     // func(new int{1024});
-
-    const unique_ptr<int> p1;       // 智能指针不能修改
-    const unique_ptr<const int> p2; // 对象不能修改
-
-    make_unique<std::vector<int>>(3, 3);
 }

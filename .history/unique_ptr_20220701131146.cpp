@@ -75,8 +75,8 @@ private:
 template <typename T, typename... Args>
 auto make_unique(Args &&...args)
 {
-    return unique_ptr<T>{new T(std::forward(args)...)};
-    // return unique_ptr<T>{new T{std::forward(args)...}};
+    // return unique_ptr<T>{new T(std::forward(args)...)};
+    return unique_ptr<T>{new T{std::forward(args)...}};
 }
 
 void func(unique_ptr<int>) {}

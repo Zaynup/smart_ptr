@@ -75,8 +75,8 @@ private:
 template <typename T, typename... Args>
 auto make_unique(Args &&...args)
 {
-    return unique_ptr<T>{new T(std::forward(args)...)};
-    // return unique_ptr<T>{new T{std::forward(args)...}};
+    // return unique_ptr<T>{new T(std::forward(args)...)};
+    return unique_ptr<T>{new T{std::forward(args)...}};
 }
 
 void func(unique_ptr<int>) {}
@@ -93,5 +93,5 @@ int main()
     const unique_ptr<int> p1;       // 智能指针不能修改
     const unique_ptr<const int> p2; // 对象不能修改
 
-    make_unique<std::vector<int>>(3, 3);
+    make_unique(std::vector<int>)
 }
