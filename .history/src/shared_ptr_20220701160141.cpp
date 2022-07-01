@@ -1,0 +1,5 @@
+
+
+class ref_count
+{
+};
