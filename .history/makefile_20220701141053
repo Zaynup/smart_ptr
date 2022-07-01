@@ -1,0 +1,19 @@
+SRCS = $(wildcard ./src/*.cpp)
+
+inc_path = ./include/
+
+CC:=g++
+CFLAGS := -g -Wall -O3
+CPPFLAGS := $(CFLAGS)
+
+target=test_unique_ptr
+ALL:$(target)
+	
+$(target):$(SRCS)
+	$(CC) -o $(target) $(SRCS)
+	mv $(target) ./bin
+	
+clean:
+	-rm -rf ./bin/$(target) 
+
+.PHONY: clean ALL

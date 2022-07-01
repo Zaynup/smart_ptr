@@ -1,0 +1,20 @@
+SRCS = $(wildcard ./src/*.cpp)
+OBJS := $(patsubst %.cpp,%.o,$(SRCS))
+
+inc_path = ./include/
+
+CC:=g++
+CFLAGS := -g -Wall -O3
+CPPFLAGS := $(CFLAGS)
+
+target=test_unique_ptr	
+
+ALL:$(target)
+	
+$(target):$(OBJS) 
+	$(CC) $(OBJS) -o $(target)
+	
+clean:
+	-rm -rf $(target) $(obj)
+
+.PHONY: clean ALL

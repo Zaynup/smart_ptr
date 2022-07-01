@@ -1,0 +1,18 @@
+src = $(wildcard ./src/*.cpp)
+
+
+inc_path = ./include/
+CC:=g++
+CFLAGS := -g -Wall -O3
+CPPFLAGS := $(CFLAGS)
+
+
+ALL:$(target)
+	
+$(target):$(obj) 
+	$(CC) $(obj) -o $(target)
+	
+clean:
+	-rm -rf $(target) $(obj)
+
+.PHONY: clean ALL

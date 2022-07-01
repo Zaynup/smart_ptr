@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.html": "html",
-        "utility": "cpp"
+        "utility": "cpp",
+        "type_traits": "cpp"
     }
 }

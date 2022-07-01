@@ -1,0 +1,21 @@
+SRCS = $(wildcard ./src/*.cpp)
+OBJS := $(patsubst %.cpp,%.o,$(SRCS))
+
+inc_path = ./include/
+
+CC:=g++
+CFLAGS := -g -Wall -O3
+CPPFLAGS := $(CFLAGS)
+
+target=test_unique_ptr.exe	
+
+ALL:$(target)
+	
+$(target):$(OBJS) 
+	$(CC) $(OBJS) -o $(target)
+	mv $(target) ./bin
+	
+clean:
+	-rm -rf ./bin/$(target) 
+
+.PHONY: clean ALL

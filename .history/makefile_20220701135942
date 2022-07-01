@@ -1,0 +1,23 @@
+src = $(wildcard ./src/*.cpp)
+
+inc_path = ./include/
+CC = gcc
+target=test_unique_ptr	
+CPPFLAGS = -g
+CFLAGS = -I
+LDFLAGS = 
+
+ALL:$(target)
+
+
+
+$(obj):./obj/%.o:./src/%.c	
+	$(CC) -c $< -o $@ $(CFLAGS) $(inc_path)
+	
+$(target):$(obj) 
+	$(CC) $(obj) -o $(target)
+	
+clean:
+	-rm -rf $(target) $(obj)
+
+.PHONY: clean ALL
