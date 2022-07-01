@@ -33,4 +33,4 @@
 
 # 忽略指定文件夹
 vscode/
-history/
+./history/
