@@ -7,45 +7,42 @@ public:
     constexpr unique_ptr() noexcept = default;
     constexpr unique_ptr(std::nullptr_t) noexcept : unique_ptr() {}
 
-    // 不能隐身转换，拷贝构造声明为explicit
     explicit unique_ptr(T *ptr) noexcept : m_ptr(ptr){};
 
     unique_ptr(const unique_ptr &rhs) = delete;
+
     unique_ptr(unique_ptr &&rhs) noexcept : m_ptr(rhs.release()) {}
 
-    ~unique_ptr() noexcept
+    unique_ptr &operator=(const unique_ptr &rhs) = delete;
+    unique_ptr &operator=(cosnt unique_ptr &&rhs)
     {
-        delete m_ptr;
+        reset(rhs.release());
+        return *this;
     }
-
-    unique_ptr &operator=(const unique_ptr &) = delete;
-
     unique_ptr &operator=(std::nullptr_t)
     {
         reset();
         return *this;
     }
 
-    unique_ptr &operator=(unique_ptr &&rhs) noexcept
+    ~unique_ptr() noexcept
     {
-        reset(rhs.release());
-        return *this;
+        delete m_ptr;
     }
 
-    T &operator*() const
+    T &operator*()
     {
         return *m_ptr;
     }
 
-    T *operator->() const noexcept
+    T *operator->()
     {
         return m_ptr;
     }
 
-    // 不能隐身转换，bool声明为explicit
     explicit operator bool() const noexcept
     {
-        return static_cast<bool>(m_ptr);
+        return std::static_cast<bool>(m_ptr);
     }
 
     T *get() const noexcept
@@ -60,7 +57,6 @@ public:
 
     void reset(T *ptr) noexcept
     {
-        // 若m_ptr本身为空指针，delete空指针无问题
         delete std::exchange(m_ptr, ptr);
     }
 
